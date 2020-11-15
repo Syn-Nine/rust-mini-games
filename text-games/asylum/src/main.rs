@@ -1,7 +1,6 @@
 // Asylum - A text adventure by Syn9
 //
-enum RoomEnum
-{
+enum RoomEnum {
     RoomEntrance,
     RoomFoyer,
     RoomHallway,
@@ -17,22 +16,19 @@ enum RoomEnum
 }
 
 fn main() {
-
     println!("Asylum");
     println!("------------------------");
     println!("A text adventure by Syn9");
 
     let mut room: RoomEnum = RoomEnum::RoomEntrance;
-    let mut flags: [bool;10] = [false;10];
+    let mut flags: [bool; 10] = [false; 10];
 
-    loop
-    {
+    loop {
         println!("\n{}:", room_name(&room));
         println!("------------------------");
         println!("{}", room_description(&room, &flags));
 
-        match room
-        {
+        match room {
             RoomEnum::RoomDiedDrugs => break,
             RoomEnum::RoomDiedHobo => break,
             RoomEnum::RoomDiedFall => break,
@@ -43,222 +39,157 @@ fn main() {
         get_valid_input(&mut room, &mut flags);
 
         std::thread::sleep(std::time::Duration::from_secs(3));
-
     }
 }
 
-fn perform_action(option: &u8, room: &mut RoomEnum, flags: &mut[bool;10]) -> bool
-{
-    match room
-    {
-        RoomEnum::RoomEntrance =>
-        {
-            if b'g' == *option
-            {
+fn perform_action(option: &u8, room: &mut RoomEnum, flags: &mut [bool; 10]) -> bool {
+    match room {
+        RoomEnum::RoomEntrance => {
+            if b'g' == *option {
                 println!("\nYou climb your way through a small opening in the broken glass door.");
                 *room = RoomEnum::RoomFoyer;
                 return true;
             }
-        },
-        RoomEnum::RoomFoyer =>
-        {
-            if b'c' == *option
-            {
+        }
+        RoomEnum::RoomFoyer => {
+            if b'c' == *option {
                 println!("\nYou slowly make your way down the dark hallway.");
                 *room = RoomEnum::RoomHallway;
                 return true;
             }
-        },
-        RoomEnum::RoomHallway =>
-        {
-            if b'b' == *option
-            {
+        }
+        RoomEnum::RoomHallway => {
+            if b'b' == *option {
                 println!("\nYou jimmy open the old wooden door.");
                 *room = RoomEnum::RoomOffice;
                 return true;
-            }
-            else if b'o' == *option
-            {
+            } else if b'o' == *option {
                 println!("\nThe door creeks loudly as you open it.");
                 *room = RoomEnum::RoomCloset;
                 return true;
-            }
-            else if b'i' == *option
-            {
+            } else if b'i' == *option {
                 println!("\nYou slowly walk toward a faint groaning sound in the dark corner.");
                 *room = RoomEnum::RoomHobo;
                 return true;
-            }
-            else if b's' == *option
-            {
-                if !flags[4]
-                {
+            } else if b's' == *option {
+                if !flags[4] {
                     println!("\nYou try to open the stairwell door, but it won't budge!");
                     return true;
-                }
-                else
-                {
+                } else {
                     println!("\nThe door is locked. You use the keys and with a some force it cracks open just enough to slide through.");
                     *room = RoomEnum::RoomStairwell;
                     return true;
                 }
-            }
-            else if b'g' == *option
-            {
+            } else if b'g' == *option {
                 println!("Maybe it's better to head back to the Foyer.");
                 *room = RoomEnum::RoomFoyer;
                 return true;
             }
-        },
-        RoomEnum::RoomOffice =>
-        {
-            if !flags[0]
-            {
-                if b'l' == *option
-                {
+        }
+        RoomEnum::RoomOffice => {
+            if !flags[0] {
+                if b'l' == *option {
                     println!("\nThe door is stuck, but you pull with all your weight to bust it open.\nIt's full of office supplies and, strangely, a metal bat on the bottom shelf.");
                     flags[0] = true;
                     return true;
                 }
-            }
-            else if flags[0] && !flags[1]
-            {
-                if b't' == *option
-                {
+            } else if flags[0] && !flags[1] {
+                if b't' == *option {
                     println!("\nYou grab the old dirty bat.");
                     flags[1] = true;
                     return true;
                 }
             }
-            
-            if b'g' == *option
-            {
+
+            if b'g' == *option {
                 println!("\nYou head back to the Hallway.");
                 *room = RoomEnum::RoomHallway;
                 return true;
             }
-        },
-        RoomEnum::RoomCloset =>
-        {
-            if b'l' == *option
-            {
-                if !flags[5]
-                {
+        }
+        RoomEnum::RoomCloset => {
+            if b'l' == *option {
+                if !flags[5] {
                     println!("\nThe shelves are full of cleaning chemicals, however you do find a long length of rope.");
                     flags[2] = true;
-                }
-                else
-                {
+                } else {
                     println!("\nThere is nothing else here that you can use.");
                 }
                 return true;
-            }
-            else if b't' == *option
-            {
-                if flags[2] && !flags[5]
-                {
+            } else if b't' == *option {
+                if flags[2] && !flags[5] {
                     println!("\nYou grab the rope.");
                     flags[5] = true;
                     return true;
                 }
-            }
-            else if b'p' == *option
-            {
+            } else if b'p' == *option {
                 println!("\nThe cat lets out a shreek and bites you! That's gonna leave a mark.");
                 return true;
-            }
-            else if b'g' == *option
-            {
+            } else if b'g' == *option {
                 println!("\nYou head back to the Hallway.");
                 *room = RoomEnum::RoomHallway;
                 return true;
             }
-        },
-        RoomEnum::RoomHobo =>
-        {
-            if !flags[3]
-            {
-                if b'a' == *option
-                {
-                    if flags[1]
-                    {
+        }
+        RoomEnum::RoomHobo => {
+            if !flags[3] {
+                if b'a' == *option {
+                    if flags[1] {
                         println!("\nIn sheer terror, you swing the bat wildly, knocking the hobo to the ground.");
                         flags[3] = true;
                         return true;
                     }
-                }
-                else if b'r' == *option
-                {
+                } else if b'r' == *option {
                     println!("\nYou turn and attempt to run away!");
                     *room = RoomEnum::RoomDiedHobo;
                     return true;
                 }
-            }
-            else
-            {
-                if !flags[4]
-                {
-                    if b't' == *option
-                    {
+            } else {
+                if !flags[4] {
+                    if b't' == *option {
                         println!("\nYou find some keys.");
                         flags[4] = true;
                         return true;
                     }
                 }
-                if b'g' == *option
-                {
+                if b'g' == *option {
                     println!("\nYou head back to the Hallway");
                     *room = RoomEnum::RoomHallway;
                     return true;
                 }
             }
-        },
-        RoomEnum::RoomStairwell =>
-        {
-            if b'u' == *option
-            {
+        }
+        RoomEnum::RoomStairwell => {
+            if b'u' == *option {
                 println!("\nYou start climbing the stairs, let's find the roof!");
                 *room = RoomEnum::RoomRoof;
                 return true;
-            }
-            else if b'r' == *option
-            {
+            } else if b'r' == *option {
                 println!("\nYou find some old porno mags and what looks like it might be drugs.");
                 flags[6] = true;
                 return true;
-            }
-            else if flags[6] && b't' == *option
-            {
+            } else if flags[6] && b't' == *option {
                 println!("\nYou grab the drugs and pop them in your mouth. What the hell, you only live once...");
                 *room = RoomEnum::RoomDiedDrugs;
                 return true;
-            }
-            else if b'g' == *option
-            {
+            } else if b'g' == *option {
                 println!("\nMaybe it's better to head back");
                 *room = RoomEnum::RoomHallway;
                 return true;
             }
-        },
-        RoomEnum::RoomRoof =>
-        {
-            if b'c' == *option
-            {
-                if !flags[5]
-                {
+        }
+        RoomEnum::RoomRoof => {
+            if b'c' == *option {
+                if !flags[5] {
                     println!("\nYou lean over the edge and try to make your way down.");
                     *room = RoomEnum::RoomDiedFall;
                     return true;
-                }
-                else
-                {
+                } else {
                     println!("\nYou lean over the edge and try to make your way down. Thankfully, you have this rope!");
                     *room = RoomEnum::RoomWin;
                     return true;
                 }
-            }
-            else if b'g' == *option
-            {
+            } else if b'g' == *option {
                 println!("\nMaybe you'd rather look around some more and head back");
                 *room = RoomEnum::RoomStairwell;
                 return true;
@@ -269,32 +200,29 @@ fn perform_action(option: &u8, room: &mut RoomEnum, flags: &mut[bool;10]) -> boo
     false
 }
 
-fn get_valid_input(mut room: &mut RoomEnum, mut flags: &mut[bool;10])
-{
+fn get_valid_input(mut room: &mut RoomEnum, mut flags: &mut [bool; 10]) {
     println!("\nWhat do you do?");
     println!("\nOptions:\n{}", room_options(&room, &mut flags));
 
-    loop
-    {
+    loop {
         let option = get_player_input();
-        if perform_action(&option, &mut room, &mut flags)
-        {
+        if perform_action(&option, &mut room, &mut flags) {
             return;
         }
         println!("Try Again:");
     }
 }
 
-fn get_player_input() -> u8
-{
+fn get_player_input() -> u8 {
     let mut input = String::new();
-    std::io::stdin().read_line(&mut input).expect("Expected input");
-    
+    std::io::stdin()
+        .read_line(&mut input)
+        .expect("Expected input");
+
     input.as_bytes()[0]
 }
 
-fn room_options(room: &RoomEnum, flags: &[bool;10]) -> String
-{
+fn room_options(room: &RoomEnum, flags: &[bool; 10]) -> String {
     match room
     {
         RoomEnum::RoomEntrance => String::from(" [g] go inside"),
@@ -363,10 +291,8 @@ fn room_options(room: &RoomEnum, flags: &[bool;10]) -> String
     }
 }
 
-fn room_name(room: &RoomEnum) -> String
-{
-    match room
-    {
+fn room_name(room: &RoomEnum) -> String {
+    match room {
         RoomEnum::RoomEntrance => String::from("Dirt Path"),
         RoomEnum::RoomFoyer => String::from("Foyer"),
         RoomEnum::RoomHallway => String::from("Hallway"),
@@ -382,8 +308,7 @@ fn room_name(room: &RoomEnum) -> String
     }
 }
 
-fn room_description(room: &RoomEnum, flags: &[bool;10]) -> String
-{
+fn room_description(room: &RoomEnum, flags: &[bool; 10]) -> String {
     match room
     {
         RoomEnum::RoomEntrance => String::from("Wandering the night with your friends along an old dirt path, you come upon an abandoned building.\nOne of your friends says, \"I bet you won't go inside and check it out...\""),
