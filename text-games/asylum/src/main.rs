@@ -42,6 +42,8 @@ fn main() {
 
         get_valid_input(&mut room, &mut flags);
 
+        std::thread::sleep(std::time::Duration::from_secs(3));
+
     }
 }
 
