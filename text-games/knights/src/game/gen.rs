@@ -19,7 +19,7 @@ pub fn gen_map() -> Vec<usize> {
 
     for i in 0..25 {
         for _j in 0..25 {
-            let b = rand::thread_rng().gen_range(0, 25);
+            let b = rand::thread_rng().gen_range(0..25);
             let temp = ret[b];
             ret[b] = ret[i];
             ret[i] = temp;
@@ -118,7 +118,7 @@ pub fn gen_names() -> Vec<String> {
     let mut suffix: Vec<String> = Vec::new();
 
     for _i in 0..24 {
-        let idx: usize = rand::thread_rng().gen_range(0, names.len());
+        let idx: usize = rand::thread_rng().gen_range(0..names.len());
         let name: String = names[idx].to_string();
 
         let mut cnt: i32 = 1;
