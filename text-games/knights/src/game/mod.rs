@@ -992,7 +992,7 @@ impl GameData {
                 break;
             }
 
-            let idx: usize = rand::thread_rng().gen_range(0, lands.len());
+            let idx: usize = rand::thread_rng().gen_range(0..lands.len());
             self.map[lands[idx]] = to;
         }
     }
@@ -1491,37 +1491,37 @@ impl GameData {
             }
             CommandEnum::InvadeLesser => {
                 if !ilesser.is_empty() {
-                    let who = ilesser[rand::thread_rng().gen_range(0, ilesser.len()) as usize];
+                    let who = ilesser[rand::thread_rng().gen_range(0..ilesser.len()) as usize];
                     self.invade(idx, who);
                 }
             }
             CommandEnum::InvadeEqual => {
                 if !iequal.is_empty() {
-                    let who = iequal[rand::thread_rng().gen_range(0, iequal.len()) as usize];
+                    let who = iequal[rand::thread_rng().gen_range(0..iequal.len()) as usize];
                     self.invade(idx, who);
                 }
             }
             CommandEnum::InvadeHigher => {
                 if !ihigher.is_empty() {
-                    let who = ihigher[rand::thread_rng().gen_range(0, ihigher.len()) as usize];
+                    let who = ihigher[rand::thread_rng().gen_range(0..ihigher.len()) as usize];
                     self.invade(idx, who);
                 }
             }
             CommandEnum::DemandLesser => {
                 if !dlesser.is_empty() {
-                    let who = dlesser[rand::thread_rng().gen_range(0, dlesser.len()) as usize];
+                    let who = dlesser[rand::thread_rng().gen_range(0..dlesser.len()) as usize];
                     self.demand(idx, who);
                 }
             }
             CommandEnum::DemandEqual => {
                 if !dequal.is_empty() {
-                    let who = dequal[rand::thread_rng().gen_range(0, dequal.len()) as usize];
+                    let who = dequal[rand::thread_rng().gen_range(0..dequal.len()) as usize];
                     self.demand(idx, who);
                 }
             }
             CommandEnum::DemandHigher => {
                 if !dhigher.is_empty() {
-                    let who = dhigher[rand::thread_rng().gen_range(0, dhigher.len()) as usize];
+                    let who = dhigher[rand::thread_rng().gen_range(0..dhigher.len()) as usize];
                     self.demand(idx, who);
                 }
             }
