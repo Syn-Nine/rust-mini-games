@@ -1,0 +1,15 @@
+// entity id, component, component data
+0,billboard,assets/board.png
+0,visible,true
+0,position,235,180
+0,scale,470,360
+//
+1,text,"text"
+1,visible,false
+1,position,100,100
+1,scale,1,1.5
+//
+2,text,"text"
+2,visible,false
+2,position,100,100
+2,scale,1,1.5
