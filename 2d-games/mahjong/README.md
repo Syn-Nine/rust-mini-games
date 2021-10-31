@@ -21,9 +21,9 @@ Match:
 - number of skulls
 - number of bats
 - spider direction
+- alien/demon/wolf
 - any moon phase
 - any dead flowers
-- any alien/demon/wolf
 
 ### Notes:
 All code and artwork by Syn9 with the exception of:
