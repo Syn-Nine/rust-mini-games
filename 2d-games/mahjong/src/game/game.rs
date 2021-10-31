@@ -262,6 +262,7 @@ pub fn initialize(cache: &mut GameData, heap: &mut GameDataHeap, world: &mut mgf
 
 }
 
+
 fn check_stuck(cache: &mut GameData) -> bool {
 
     let mut options: Vec<usize> = Vec::new();
@@ -341,6 +342,7 @@ fn check_stuck(cache: &mut GameData) -> bool {
     false
 }
 
+
 #[rustfmt::skip]
 pub fn update(cache: &mut GameData, heap: &mut GameDataHeap, world: &mut mgfw::ecs::World) -> bool {
     let mut expect_blown = false;
@@ -372,7 +374,7 @@ pub fn update(cache: &mut GameData, heap: &mut GameDataHeap, world: &mut mgfw::e
                 expect_blown = true;
             }
         } else if cache.stuck {
-            world.entity_set_text(1, format!("Stuck!"));
+            world.entity_set_text(1, format!("Stuck! Click to Shuffle."));
             let ln = world.text_get_width(1) as f32 * 0.5;
             world.entity_set_position_xy(1, 235.0 - ln, 10.0);        
             expect_blown = true;
@@ -409,6 +411,49 @@ pub fn update(cache: &mut GameData, heap: &mut GameDataHeap, world: &mut mgfw::e
 pub fn event(cache: &mut GameData, heap: &mut GameDataHeap, world: &mut mgfw::ecs::World, event_id: u8) -> bool {
 
     if mgfw::EVENT_INPUT_MOUSE_BUTTON_UP != event_id { return false; }
+
+    if cache.stuck || (world.mouse_x < 10 && world.mouse_y < 10) {
+        // shuffle board
+        for i in 0..BOARD_SZ {
+            if 0 == cache.board[i] {
+                continue;
+            }
+
+            let i0: usize = cache.board[i] - 1;
+            if !cache.stones[i0].active {
+                continue;
+            }
+    
+            let mut i1: usize = i0;
+            
+            loop {
+                let j: usize = (mgfw::rnd() * BOARD_SZ as f32).floor() as usize;
+                if 0 != cache.board[j] {
+                    i1 = cache.board[j] - 1;
+                    break;
+                }
+            }
+    
+            let e0: usize = cache.stones[i0].entity;
+            let e1: usize = cache.stones[i1].entity;
+
+            let tsuite = cache.stones[i0].suite;
+            let tnum = cache.stones[i0].number;
+            cache.stones[i0].suite = cache.stones[i1].suite;
+            cache.stones[i1].suite = tsuite;
+            cache.stones[i0].number = cache.stones[i1].number;
+            cache.stones[i1].number = tnum;
+
+            let s0 = world.entity_get_billboard(e0);
+            let s1 = world.entity_get_billboard(e1);
+            world.entity_set_billboard(e0, s1);
+            world.entity_set_billboard(e1, s0);
+            
+        }
+        world.entity_set_visibility(1, false);
+        cache.stuck = false;
+        return false;
+    }
 
     let mut found: usize = NONE_SELECTED;
     //println!("{},{}", world.mouse_x, world.mouse_y);

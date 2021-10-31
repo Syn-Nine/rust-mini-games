@@ -42,6 +42,10 @@ impl BillboardRenderComponentManager {
         self.texture_files.insert(idx, image);
     }
 
+    pub fn get_image(&self, idx: usize) -> String {
+        self.texture_files.get(&idx).unwrap().to_string()
+    }
+
     pub fn is_constructed(&self, idx: usize) -> bool {
         self.get_data_ref(idx).constructed
     }

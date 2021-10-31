@@ -170,6 +170,10 @@ impl World {
         self.rcm.set_type(idx, RENDER_TYPE_BILLBOARD);
     }
 
+    pub fn entity_get_billboard(&self, idx: usize) -> String {
+        self.bbcm.get_image(idx)
+    }
+
     pub fn entity_set_line_buffer(&mut self, idx: usize, pnts: &Vec<Position>, clrs: &Vec<Color>) {
         self.lcm.set_line_buffer(idx, pnts, clrs);
         self.ent.add_component(idx, COMPONENT_RENDER);
