@@ -1,0 +1,17 @@
+mod game;
+mod mgfw;
+
+const TITLE: &str = "Tet-Rust";
+const XRES: i32 = 192;
+const YRES: i32 = 400;
+
+fn main() {
+    let el = glutin::event_loop::EventLoop::new();
+    let mut core = mgfw::Core::new(TITLE, XRES, YRES, &el);
+
+    el.run(move |event, _, control_flow| {
+        if !core.check_events(&event) {
+            *control_flow = glutin::event_loop::ControlFlow::Exit;
+        }
+    });
+}
