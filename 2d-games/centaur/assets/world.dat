@@ -1,0 +1,12 @@
+// entity id, component, component data
+0,text,"Level: 1"
+0,visible,true
+0,position,4,5
+0,scale,1,1
+0,color,0.5,0.5,1.0
+//
+1,text,"Gems: 1/9"
+1,visible,true
+1,position,324,5
+1,scale,1,1
+1,color,0.5,0.5,1.0
