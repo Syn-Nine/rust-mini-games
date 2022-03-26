@@ -7,7 +7,7 @@ Retro drift racing game created using [mgfw - Rust Mini Game Framework](https://
 ![](https://github.com/Syn-Nine/rust-mini-games/blob/main/2d-games/vracer/screenshots/shots-small.png)
 
 ### Controls:
-Throttle - Up Arrow
-Steering - Left/Right Arrows
-Confirm - Space
-Quit Race - ESC
+- Throttle - Up Arrow
+- Steering - Left/Right Arrows
+- Confirm - Space
+- Quit Race - ESC
