@@ -1,6 +1,6 @@
 # This is Fine Sokoban
 
-Sokoban game inspired by the The is Fine meme. Use the arrow keys to push the TPS reports into the file folders while the room is burning down and you're surrounded by clocks - a metaphor for my work life.
+Sokoban game inspired by the This is Fine meme. Use the arrow keys to push the TPS reports into the file folders while the room is burning down and you're surrounded by clocks - a metaphor for my work life.
 
 Created using [mgfw - Rust Mini Game Framework](https://github.com/Syn-Nine/mgfw).
 
