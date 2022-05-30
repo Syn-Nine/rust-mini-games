@@ -33,7 +33,7 @@ fn main() {
             _ => continue,
         };
 
-        let comp = rand::thread_rng().gen_range(0, 3);
+        let comp = rand::thread_rng().gen_range(0..3);
         println!("Computer: {}", options[comp]);
         println!("Player: {}", options[guess]);
 
