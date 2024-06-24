@@ -7,7 +7,7 @@ use rand::Rng;
 use std::cmp::Ordering;
 
 fn main() {
-    let secret = rand::thread_rng().gen_range(1, 101);
+    let secret = rand::thread_rng().gen_range(1..=100);
     let mut tries = 6;
 
     loop {

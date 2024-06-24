@@ -967,7 +967,7 @@ fn lore() -> String {
 }
 
 fn generate_enemy(stats: &Player) -> Enemy {
-    let mut idx = rand::thread_rng().gen_range(0, 5);
+    let mut idx = rand::thread_rng().gen_range(0..5);
     let level = stats.level;
     if 4 == level && stats.exp > level_up_exp(&stats.level) {
         idx = 5;
